@@ -23,10 +23,10 @@
             width: 100%;
             padding: 15px;
             background-color: #0d0221;
-            position: fixed; /* Make header fixed at the top */
-            top: 0; /* Position it at the very top */
+            position: fixed;
+            top: 0;
             left: 0;
-            z-index: 1000; /* Ensure it stays above other elements */
+            z-index: 1000;
         }
         .logo {
             height: 50px;
@@ -68,7 +68,7 @@
             background-color: #4CAF50;
         }
         h1 {
-            margin-top: 80px; /* Add margin to prevent overlap with fixed header */
+            margin-top: 80px;
             margin-bottom: 10px;
         }
         .container {
@@ -88,7 +88,6 @@
             font-weight: bold;
             font-size: 18px;
             border: none;
-            position: relative;
         }
         .box:hover {
             transform: scale(1.05);
@@ -163,56 +162,60 @@
     <input type="text" id="uid" placeholder="Enter your Game UID">
 
     <div class="container">
-        <div class="box" onclick="selectPackage('60 UC - 140rs')">60 UC</div>
-        <div class="box" onclick="selectPackage('120 UC - 275rs')">120 UC</div>
-        <div class="box" onclick="selectPackage('240 UC - 545rs')">240 UC</div>
-        <div class="box" onclick="selectPackage('325 UC - 685rs')">325 UC</div>
-        <div class="box" onclick="selectPackage('445 UC - 955rs')">445 UC</div>
-        <div class="box" onclick="selectPackage('660 UC - 1365rs')">660 UC</div>
-        <div class="box" onclick="selectPackage('985 UC - 2045rs')">985 UC</div>
-        <div class="box" onclick="selectPackage('1800 UC - 3755rs')">1800 UC</div>
-        <div class="box" onclick="selectPackage('2460 UC - 5115rs')">2460 UC</div>
-        <div class="box" onclick="selectPackage('4000 UC - 6705rs')">4000 UC</div>
-        <div class="box" onclick="selectPackage('8100 UC - 13004rs')">8100 UC</div>
+        <div class="box" onclick="selectPackage('60 UC', 140)">60 UC</div>
+        <div class="box" onclick="selectPackage('120 UC', 275)">120 UC</div>
+        <div class="box" onclick="selectPackage('240 UC', 545)">240 UC</div>
+        <div class="box" onclick="selectPackage('325 UC', 685)">325 UC</div>
+        <div class="box" onclick="selectPackage('660 UC', 1365)">660 UC</div>
+        <div class="box" onclick="selectPackage('1800 UC', 3750)">1800 UC</div>
+        <div class="box" onclick="selectPackage('4000 UC', 6705)">4000 UC</div>
+          
+        
     </div>
 
     <div id="price"><strong>Click on an item to see the price</strong></div>
 
-    <div class="disclaimer">
-        Select a UC package to check the price and make payment instantly.<br>
-        After payment, you'll receive your UC within 5-30 minutes. For fast service, please order between 7 AM and 11 PM for instant top-ups.
-    </div>
+    
 
     <a href="#" class="next-button" onclick="goToPayment()">Next</a>
 
     <script>
-        let selectedPackage = ''; // Global variable to store the selected package
+        let selectedPackage = ''; 
+        let packagePrice = 0;     
+        let discountPercentage = 2;
 
-        function selectPackage(package) {
-            selectedPackage = package;  // Set the selected package
-            document.getElementById('price').textContent = package;  // Show the package price
+        function selectPackage(package, price) {
+            selectedPackage = package; 
+            packagePrice = price;      
+
+            const discountAmount = (packagePrice * discountPercentage) / 100;
+            const finalPrice = packagePrice - discountAmount;
+
+            document.getElementById('price').innerHTML = `
+                <strong>${package}</strong><br>
+                Price: ${packagePrice}rs<br>
+                Discount: ${discountPercentage}% (${discountAmount.toFixed(2)}rs)<br>
+                Total Cost: ${finalPrice.toFixed(2)}rs
+            `;
         }
 
         function goToPayment() {
             const uid = document.getElementById('uid').value;
 
-            // Validate if UID is entered and a package is selected
             if (!uid) {
-                document.getElementById('uid').focus(); // Focus to open the keyboard for UID input
-                return; // No UID, stop execution
+                document.getElementById('uid').focus();
+                return; 
             }
 
             if (!selectedPackage) {
-                alert('Please select a UC package!'); // If no package selected
+                alert('Please select a UC package!');
                 return;
             }
 
-            // Save UID and selected package to localStorage
             localStorage.setItem('uid', uid);
             localStorage.setItem('package', selectedPackage);
 
-            // Redirect to Payment page
-            window.location.href = `pubg-payment.html`;  // no need to pass uid and package in URL
+            window.location.href = `pubg-payment.html`;
         }
 
         function toggleMenu() {
@@ -220,7 +223,6 @@
             dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
         }
 
-        // Function to hide the menu when clicked outside
         window.onclick = function(event) {
             const dropdownMenu = document.getElementById('dropdownMenu');
             if (!event.target.closest('.menu-bar')) {
