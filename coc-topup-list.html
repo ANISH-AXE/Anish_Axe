@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telegram premium</title>
+    <title>COC LIST</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -196,12 +196,18 @@
 
         <div id="price">Click on an item to see the price</div>
 
-        <a href="coc-payment.html" class="next-button">Next</a>
+        <a href="coc-payment.html" class="next-button" onclick="goToPayment()">Next</a>
     </div>
 
     <script>
         function selectPackage(packageName) {
             document.getElementById('price').textContent = packageName;
+            localStorage.setItem('package', packageName);
+        }
+
+        function goToPayment() {
+            const uid = document.getElementById('uid').value;
+            localStorage.setItem('uid', uid);
         }
 
         function toggleMenu() {
