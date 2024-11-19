@@ -116,7 +116,7 @@
         }
         #price {
             margin-top: 20px;
-            color: #81c784;
+            color: white;
             font-weight: bold;
             font-size: 1.1rem;
             text-align: center;
@@ -169,33 +169,23 @@
         <div class="box" onclick="selectPackage('660 UC', 1365)">660 UC</div>
         <div class="box" onclick="selectPackage('1800 UC', 3750)">1800 UC</div>
         <div class="box" onclick="selectPackage('4000 UC', 6705)">4000 UC</div>
-          
-        
     </div>
 
     <div id="price"><strong>Click on an item to see the price</strong></div>
 
-    
-
     <a href="#" class="next-button" onclick="goToPayment()">Next</a>
 
     <script>
-        let selectedPackage = ''; 
-        let packagePrice = 0;     
-        let discountPercentage = 2;
+        let selectedPackage = '';
+        let packagePrice = 0;
 
         function selectPackage(package, price) {
-            selectedPackage = package; 
-            packagePrice = price;      
-
-            const discountAmount = (packagePrice * discountPercentage) / 100;
-            const finalPrice = packagePrice - discountAmount;
+            selectedPackage = package;
+            packagePrice = price;
 
             document.getElementById('price').innerHTML = `
                 <strong>${package}</strong><br>
-                Price: ${packagePrice}rs<br>
-                Discount: ${discountPercentage}% (${discountAmount.toFixed(2)}rs)<br>
-                Total Cost: ${finalPrice.toFixed(2)}rs
+                Price: ${packagePrice}rs
             `;
         }
 
@@ -204,7 +194,7 @@
 
             if (!uid) {
                 document.getElementById('uid').focus();
-                return; 
+                return;
             }
 
             if (!selectedPackage) {
@@ -228,7 +218,7 @@
             if (!event.target.closest('.menu-bar')) {
                 dropdownMenu.style.display = 'none';
             }
-        }
+        };
     </script>
 </body>
 </html>
