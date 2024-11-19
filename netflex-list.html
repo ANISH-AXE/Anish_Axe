@@ -132,6 +132,7 @@
         #price {
             margin-top: 20px;
             text-align: center;
+            font-weight: bold; /* Makes price bold */
         }
 
         .next-button {
@@ -176,8 +177,8 @@
         <input type="email" id="email" placeholder="Delivery Email" />
 
         <div class="container">
-            <div class="box" onclick="showPrice('1 SCREEN 1M- 335rs')">1 SCREEN 1M-4K UHD</div>
-            <div class="box" onclick="showPrice('5 SCREEN 1M-4K UHD - 685rs')">upcoming</div>
+            <div class="box" onclick="showPrice('1 SCREEN 1M- 325rs')"><strong>1 SCREEN 1M-4K UHD</strong></div>
+            <div class="box" onclick="showPrice('5 SCREEN 1M-4K UHD - 635rs')"><strong>5 SCREEN 1M</strong></div>
         </div>
 
         <div id="price"><strong>Click on a package to see the price</strong></div>
@@ -187,7 +188,7 @@
 
     <script>
         function showPrice(price) {
-            document.getElementById('price').textContent = price;
+            document.getElementById('price').innerHTML = `<strong>${price}</strong>`;
         }
 
         function toggleMenu() {
