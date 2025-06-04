@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Product Interface</title>
     <style>
         body {
@@ -35,10 +35,10 @@
         }
 
         .menu-bar div {
-            width: 35px;
+            width: 30px; /* Decreased size */
             height: 4px;
             background-color: white;
-            margin: 6px 0;
+            margin: 3px 0; /* decreased vertical gap */
             transition: all 0.3s ease;
         }
 
@@ -116,12 +116,29 @@
             padding: 3px 7px;
             border-radius: 3px;
         }
+
+        /* WhatsApp floating icon bottom left */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            z-index: 100;
+            cursor: pointer;
+            width: 70px; /* Increased size */
+            height: 70px; /* Increased size */
+        }
+
+        .whatsapp-float img {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <img src="logo.png" alt="Logo" class="logo">
+        <img src="logo.png" alt="Logo" class="logo" />
         <div class="menu-bar" onclick="toggleMenu()">
             <div></div>
             <div></div>
@@ -137,77 +154,84 @@
     <div class="product-list" id="product-list">
         <div class="product topup" onclick="location.href='ff-topup-list.html'">
             <span class="featured-badge">SERVICE</span>
-            <img src="image.png" alt="free fire">
+            <img src="image.png" alt="free fire" />
             <h3>TOPUP BD</h3>
         </div>
         <div class="product topup" onclick="location.href='1x-depo-list.html'">
             <span class="featured-badge">SERVICE</span>
-            <img src="1xbet_com.png" alt="1x bet">
+            <img src="1xbet_com.png" alt="1x bet" />
             <h3>1X DEPO</h3>
         </div>
         <div class="product topup" onclick="location.href='pubg-topup-list.html'">
             <span class="featured-badge">SERVICE</span>
-            <img src="pubg.png" alt="pubg">
+            <img src="pubg.png" alt="pubg" />
             <h3>PUBG UC</h3>
         </div>
-    
+
         <div class="product topup" onclick="location.href='telegram-topup-list.html'">
             <span class="featured-badge">SERVICE</span>
-            <img src="telegram.jpg" alt="telegram premium">
+            <img src="telegram.jpg" alt="telegram premium" />
             <h3>TELEGRAM PREMIUM</h3>
         </div>
         <div class="product topup" onclick="location.href='netflex-list.html'">
             <span class="featured-badge">SERVICE</span>
-            <img src="Netflix.png" alt="netflix premium">
+            <img src="Netflix.png" alt="netflix premium" />
             <h3>NETFLIX PREMIUM</h3>
         </div>
         <div class="product topup" onclick="location.href='roblox-topup-list.html'">
             <span class="featured-badge">SERVICE</span>
-            <img src="rb.jpeg" alt="robux">
+            <img src="rb.jpeg" alt="robux" />
             <h3>ROBUX</h3>
         </div>
         <div class="product topup" onclick="location.href='farlighr-topup-list.html'">
             <span class="featured-badge">SERVICE</span>
-            <img src="farlight.jpeg" alt="farlight diamond">
+            <img src="farlight.jpeg" alt="farlight diamond" />
             <h3>FARLIGHT DIAMOND</h3>
         </div>
         <div class="product topup" onclick="location.href='coc-topup-list.html'">
             <span class="featured-badge">SERVICE</span>
-            <img src="coc.jpeg" alt="coc gems">
+            <img src="coc.jpeg" alt="coc gems" />
             <h3>COC GEMS</h3>
         </div>
         <div class="product topup" onclick="location.href='free-fire-evo-access.html'">
             <span class="featured-badge">SERVICE</span>
-            <img src="free-fire-evo-access.webp" alt="new product 1">
+            <img src="free-fire-evo-access.webp" alt="new product 1" />
             <h3>EVO ACCESS</h3>
         </div>
         <div class="product topup" onclick="location.href='free-fire-airdrop.html'">
             <span class="featured-badge">SERVICE</span>
-            <img src="free-fire-airdrop.jpeg" alt="new product 2">
+            <img src="free-fire-airdrop.jpeg" alt="new product 2" />
             <h3>AIRDROP</h3>
         </div>
     </div>
-    
+
     <div class="product-list" id="product-list">
         <div class="product topup" onclick="location.href='next.html'">
             <span class="featured-badge">SERVICE</span>
-            <img src="download.png" alt="free fire">
+            <img src="download.png" alt="free fire" />
             <h3>TIKTOK</h3>
         </div>
+    </div>
+
+    <!-- WhatsApp floating button -->
+    <a href="https://wa.me/9779806167776" target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
+        <img src="wp-logo.png" alt="WhatsApp Logo" />
+    </a>
 
     <script>
         function toggleMenu() {
-            const dropdownMenu = document.getElementById('dropdownMenu');
-            dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+            const dropdownMenu = document.getElementById("dropdownMenu");
+            dropdownMenu.style.display =
+                dropdownMenu.style.display === "block" ? "none" : "block";
         }
 
-        window.onclick = function(event) {
-            const dropdownMenu = document.getElementById('dropdownMenu');
-            if (!event.target.closest('.menu-bar')) {
-                dropdownMenu.style.display = 'none';
+        window.onclick = function (event) {
+            const dropdownMenu = document.getElementById("dropdownMenu");
+            if (!event.target.closest(".menu-bar")) {
+                dropdownMenu.style.display = "none";
             }
-        }
+        };
     </script>
-
 </body>
 </html>
+
