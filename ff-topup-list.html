@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Topup List</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap');
+
         body {
             font-family: Arial, sans-serif;
             background: linear-gradient(135deg, #0d0221, #1d033b, #2a0845);
-            color: white;
+            color: #e0e0f8;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
             flex-direction: column;
+            user-select: none;
         }
 
         header {
@@ -22,12 +25,14 @@
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            padding: 15px;
+            padding: 15px 30px;
             background-color: #0d0221;
-            position: fixed; /* Make header fixed at the top */
+            position: fixed;
             top: 0;
             left: 0;
-            z-index: 1000; /* Ensure it stays above other elements */
+            z-index: 1000;
+            font-weight: bold;
+            letter-spacing: 1px;
         }
 
         .logo {
@@ -39,14 +44,22 @@
             display: flex;
             flex-direction: column;
             cursor: pointer;
+            position: fixed;
+            top: 10px;
+            right: 15px;
+            z-index: 1100;
+            background: #0d0221cc;
+            padding: 5px 8px;
+            border-radius: 8px;
         }
 
         .menu-bar div {
-            width: 45px;
-            height: 4px;
+            width: 30px;
+            height: 3px;
             background-color: white;
-            margin: 5px 0;
+            margin: 4px 0;
             transition: all 0.3s ease;
+            border-radius: 2px;
         }
 
         .menu-bar:hover div {
@@ -55,112 +68,155 @@
 
         .dropdown-menu {
             display: none;
-            position: absolute;
-            top: 60px;
+            position: fixed;
+            top: 50px;
             right: 15px;
-            background-color: #2a1b4b;
+            background-color: #2a1b4bcc;
             padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            z-index: 1500;
+            min-width: 140px;
         }
 
         .dropdown-menu a {
             display: block;
-            color: white;
+            color: #b6ffb6;
             text-decoration: none;
-            padding: 10px;
-            font-size: 1rem;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: background-color 0.25s ease;
+            border-radius: 8px;
         }
 
         .dropdown-menu a:hover {
-            background-color: #4CAF50;
+            background-color: #4CAF50aa;
+            color: white;
         }
 
         h1 {
-            margin-top: 100px; /* Increase margin to create space with fixed header */
+            margin-top: 100px;
             margin-bottom: 10px;
             text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: #7fff7f;
         }
 
-        /* Updated UID box styles */
         #uid {
-            width: 300px;
-            padding: 15px;
-            background-color: rgba(255, 255, 255, 0.15);
+            width: 280px;
+            padding: 8px 15px;
+            background-color: rgba(255, 255, 255, 0.12);
             border: none;
-            border-radius: 25px; /* Rounded borders */
-            font-size: 1.2rem;
-            color: white;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            color: #d9ffd9;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             outline: none;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        #uid::placeholder {
-            color: rgba(255, 255, 255, 0.7);
+            transition: background-color 0.3s ease;
+            letter-spacing: 1.5px;
+            font-weight: 600;
             text-transform: uppercase;
         }
 
+        #uid::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
         #uid:focus {
-            background-color: rgba(255, 255, 255, 0.25);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            background-color: rgba(255, 255, 255, 0.2);
         }
 
         .container {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Two columns */
-            gap: 15px;
-            padding: 20px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            padding: 0 10px 20px 10px;
+            max-width: 280px;
+            width: 100%;
         }
 
         .box {
-            padding: 15px;
-            background-color: #2a1b4b;
-            color: white;
-            border-radius: 5px;
+            padding: 10px 0;
+            background: linear-gradient(135deg, #1b114b, #321f6c);
+            color: #aaffaa;
+            border-radius: 12px;
             cursor: pointer;
             margin: 5px;
             text-align: center;
-            font-weight: bold; /* Make text bold */
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            transition: transform 0.3s ease, background 0.3s ease;
+            user-select: none;
         }
 
         .box:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transform: scale(1.1);
+            background: linear-gradient(45deg, #4caf50, #8bc34a);
+            color: #fff;
         }
 
         .next-button {
-            padding: 12px 25px;
-            background: linear-gradient(45deg, #4CAF50, #81C784);
-            color: white;
-            border-radius: 5px;
+            margin-top: 20px;
+            padding: 14px 33px;
+            background: linear-gradient(135deg, #66bb6a, #a5d6a7);
+            color: #020b01;
+            border-radius: 30px;
             text-decoration: none;
+            font-weight: 900;
+            font-size: 1.3rem;
+            transition: transform 0.3s ease;
+            user-select: none;
+            display: inline-block;
+            letter-spacing: 2px;
+            text-align: center;
         }
 
         .next-button:hover {
             transform: scale(1.1);
         }
 
-        #price {
-            margin-bottom: 15px;
-            text-align: center;
-            font-weight: bold; /* Make price text bold */
+        .discount-section {
+            margin-top: 20px;
+            padding: 14px 20px;
+            background: linear-gradient(135deg, #1c2d12, #13491c);
+            border-radius: 20px;
+            width: 280px;
+            text-align: left;
+            color: #c8f7c8;
+            font-family: 'Orbitron', monospace;
+            letter-spacing: 1.1px;
+            user-select: none;
         }
 
-        /* Center align for the whole content */
-        .content {
-            text-align: center;
+        .discount-item {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 1rem;
+            border-bottom: 1.5px solid #2e7d3211;
+        }
+
+        .discount-item:last-child {
+            font-size: 1.15rem;
+            font-weight: 900;
+            border: none;
+            color: #a4ff9f;
+        }
+
+        .discount-item strong {
+            color: #7fffbf;
         }
     </style>
 </head>
 <body>
-
     <header>
-        <img src="logo.png" alt="Logo" class="logo"> <!-- Add your logo URL here -->
+        <img src="logo.png" alt="Logo" class="logo" />
         <div class="menu-bar" onclick="toggleMenu()">
             <div></div>
             <div></div>
@@ -175,36 +231,63 @@
 
     <div class="content">
         <h1><strong><em>Enter your Uid</em></strong></h1>
-
-        <input type="text" id="uid" placeholder="Enter your Game UID" />
+        <input type="text" id="uid" placeholder="Enter your Game UID" autocomplete="off" />
 
         <div class="container">
             <div class="box" onclick="selectPackage('115 Diamonds - 98rs')">115 💎</div>
-            <div class="box" onclick="selectPackage('240 Diamonds - 188rs')">240 💎</div>
-            <div class="box" onclick="selectPackage('610 Diamonds - 478rs')">610 💎</div>
-            <div class="box" onclick="selectPackage('1240 Diamonds - 948rs')">1240 💎</div>
-            <div class="box" onclick="selectPackage('2530 Diamonds - 1860rs')">2530 💎</div>
-            <div class="box" onclick="selectPackage('Weekly - 189rs')">Weekly 💎</div>
-            <div class="box" onclick="selectPackage('weekly lite - 68rs')">Weekly lite 💎</div>
-            <div class="box" onclick="selectPackage('level up - 195rs')">Level up 💎</div>
-            <div class="box" onclick="selectPackage('monthly - 938rs')">Monthly 💎</div>
+            <div class="box" onclick="selectPackage('240 Diamonds - 192rs')">240 💎</div>
+            <div class="box" onclick="selectPackage('610 Diamonds - 492.74rs')">610 💎</div>
+            <div class="box" onclick="selectPackage('1240 Diamonds - 992.74rs')">1240 💎</div>
+            <div class="box" onclick="selectPackage('2530 Diamonds - 1950.63rs')">2530 💎</div>
+            <div class="box" onclick="selectPackage('Weekly - 194.84rs')">Weekly 💎</div>
+            <div class="box" onclick="selectPackage('weekly lite - 66.42rs')">Weekly lite 💎</div>
+            <div class="box" onclick="selectPackage('level up - 603.26rs')">Level up 💎</div>
+            <div class="box" onclick="selectPackage('monthly - 982.21rs')">Monthly 💎</div>
         </div>
-        
-        <div id="price"><strong><em>->Click on a package to see the price<-</em></strong></div>
+
+        <div class="discount-section" id="discountSection">
+            <div class="discount-item">
+                <span>Subtotal:</span>
+                <span id="subtotal">-- rs</span>
+            </div>
+            <div class="discount-item">
+                <span>Discount:</span>
+                <span>5%</span>
+            </div>
+            <div class="discount-item">
+                <strong><span>Payable:</span></strong>
+                <strong><span id="payable">-- rs</span></strong>
+            </div>
+        </div>
 
         <a href="#" class="next-button" onclick="goToPage2()">Next</a>
     </div>
 
     <script>
         let selectedPackage = '';
+        const packagePrices = {
+            '115 Diamonds - 98rs': 98,
+            '240 Diamonds - 192rs': 192,
+            '610 Diamonds - 492.74rs': 492.74,
+            '1240 Diamonds - 992.74rs': 992.74,
+            '2530 Diamonds - 1950.63rs': 1950.63,
+            'Weekly - 194.84rs': 194.84,
+            'weekly lite - 66.42rs': 66.42,
+            'level up - 603.26rs': 603.26,
+            'monthly - 982.21rs': 982.21
+        };
 
         function selectPackage(packageName) {
             selectedPackage = packageName;
-            document.getElementById('price').textContent = packageName;
+            const price = packagePrices[packageName];
+            document.getElementById('subtotal').textContent = price + ' rs';
+            const discount = price * 0.05;
+            const payable = price - discount;
+            document.getElementById('payable').textContent = payable.toFixed(2) + ' rs';
         }
 
         function goToPage2() {
-            const uid = document.getElementById('uid').value;
+            const uid = document.getElementById('uid').value.trim();
             if (!uid || !selectedPackage) {
                 alert("Please enter your UID and select a package.");
                 return;
@@ -224,8 +307,7 @@
             if (!event.target.closest('.menu-bar')) {
                 dropdownMenu.style.display = 'none';
             }
-        }
+        };
     </script>
-
 </body>
 </html>
