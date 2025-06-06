@@ -6,7 +6,7 @@
     <title>Product Interface</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
             background: #15102a;
@@ -35,10 +35,10 @@
         }
 
         .menu-bar div {
-            width: 30px; /* Decreased size */
+            width: 30px;
             height: 4px;
             background-color: white;
-            margin: 3px 0; /* decreased vertical gap */
+            margin: 3px 0;
             transition: all 0.3s ease;
         }
 
@@ -64,6 +64,7 @@
             text-decoration: none;
             padding: 10px;
             font-size: 1rem;
+            transition: background-color 0.3s;
         }
 
         .dropdown-menu a:hover {
@@ -73,7 +74,7 @@
         .product-list {
             display: grid;
             grid-template-columns: repeat(2, 1fr); /* Two columns */
-            gap: 15px;
+            gap: 20px;
             padding: 20px;
         }
 
@@ -86,6 +87,7 @@
             position: relative;
             z-index: 1;
             cursor: pointer;
+            overflow: hidden; /* Ensure badges don't overflow */
         }
 
         .product img {
@@ -93,6 +95,7 @@
             border-radius: 5px;
             margin: 0 auto;
             display: block;
+            transition: transform 0.3s;
         }
 
         .product h3 {
@@ -103,7 +106,7 @@
 
         .product:hover {
             transform: scale(1.05);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         .featured-badge {
@@ -115,6 +118,20 @@
             font-size: 12px;
             padding: 3px 7px;
             border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ffcc00; /* Yellow background */
+            color: black;
+            font-size: 12px;
+            padding: 3px 7px;
+            border-radius: 3px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
         }
 
         /* WhatsApp floating icon bottom left */
@@ -124,8 +141,8 @@
             left: 20px;
             z-index: 100;
             cursor: pointer;
-            width: 70px; /* Increased size */
-            height: 70px; /* Increased size */
+            width: 70px;
+            height: 70px;
         }
 
         .whatsapp-float img {
@@ -154,6 +171,7 @@
     <div class="product-list" id="product-list">
         <div class="product topup" onclick="location.href='ff-topup-list.html'">
             <span class="featured-badge">SERVICE</span>
+            <span class="discount-badge">5% OFF</span>
             <img src="image.png" alt="free fire" />
             <h3>TOPUP BD</h3>
         </div>
@@ -234,4 +252,3 @@
     </script>
 </body>
 </html>
-
