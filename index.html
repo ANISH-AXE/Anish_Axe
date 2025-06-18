@@ -3,163 +3,372 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Product Interface</title>
+    <title>Royal Gaming Services</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Marcellus&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #15102a;
-            color: white;
+        :root {
+            --royal-gold: #D4AF37;
+            --royal-purple: #4B0082;
+            --royal-dark: #1A103D;
+            --royal-light: #F8F1E5;
+            --royal-red: #B22222;
+            --card-bg: rgba(75, 0, 130, 0.3);
+            --text-gold: rgba(212, 175, 55, 0.9);
+            --text-light: #F8F1E5;
+            --text-dim: rgba(248, 241, 229, 0.7);
+            --glow-effect: 0 0 15px rgba(212, 175, 55, 0.6);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 8px 15px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 15px 25px rgba(0, 0, 0, 0.5);
+            --border-radius: 8px;
         }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Marcellus', serif;
+            background: linear-gradient(135deg, var(--royal-dark), var(--royal-purple));
+            color: var(--text-light);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Royal Header */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px;
-            background-color: #0d0221;
-            z-index: 10;
-            position: relative;
+            padding: 15px 5%;
+            background-color: rgba(26, 16, 61, 0.9);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+            box-shadow: var(--shadow-sm);
+            border-bottom: 1px solid var(--royal-gold);
         }
 
         .logo {
             height: 50px;
+            width: 50px;
             border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--royal-gold);
+            padding: 2px;
+            background-color: var(--royal-light);
+            transition: var(--transition);
         }
 
-        .menu-bar {
+        .logo:hover {
+            transform: rotate(15deg) scale(1.1);
+            box-shadow: var(--glow-effect);
+        }
+
+        /* Royal Menu Toggle */
+        .menu-toggle {
             display: flex;
             flex-direction: column;
-            cursor: pointer;
-        }
-
-        .menu-bar div {
+            justify-content: space-between;
             width: 30px;
-            height: 4px;
-            background-color: white;
-            margin: 3px 0;
-            transition: all 0.3s ease;
+            height: 24px;
+            cursor: pointer;
+            z-index: 110;
+            transition: var(--transition);
         }
 
-        .menu-bar:hover div {
-            background-color: #4CAF50;
+        .menu-toggle span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background-color: var(--royal-gold);
+            border-radius: 3px;
+            transition: var(--transition);
+            transform-origin: center;
         }
 
+        .menu-toggle:hover span {
+            background-color: var(--royal-light);
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        /* Royal Dropdown Menu */
         .dropdown-menu {
-            display: none;
-            position: absolute;
-            top: 60px;
-            right: 15px;
-            background-color: #2a1b4b;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            z-index: 20;
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 280px;
+            height: 100vh;
+            background: rgba(75, 0, 130, 0.95);
+            padding: 80px 30px 30px;
+            transition: var(--transition);
+            z-index: 105;
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(10px);
+            border-left: 1px solid var(--royal-gold);
+        }
+
+        .dropdown-menu.active {
+            right: 0;
         }
 
         .dropdown-menu a {
             display: block;
-            color: white;
+            color: var(--royal-gold);
             text-decoration: none;
-            padding: 10px;
-            font-size: 1rem;
-            transition: background-color 0.3s;
+            padding: 12px 15px;
+            margin: 10px 0;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            transition: var(--transition);
+            background: rgba(212, 175, 55, 0.05);
+            border-left: 3px solid transparent;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 1px;
         }
 
         .dropdown-menu a:hover {
-            background-color: #4CAF50;
+            background: rgba(212, 175, 55, 0.15);
+            transform: translateX(-5px);
+            border-left: 3px solid var(--royal-gold);
+            color: var(--royal-light);
         }
 
+        /* Royal Product Grid */
         .product-list {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Two columns */
-            gap: 20px;
-            padding: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 30px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
         .product {
-            background-color: #1f1835;
-            border-radius: 10px;
-            padding: 15px;
+            background: linear-gradient(145deg, rgba(75, 0, 130, 0.5), rgba(26, 16, 61, 0.7));
+            border-radius: var(--border-radius);
+            padding: 20px;
             text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: var(--transition);
             position: relative;
-            z-index: 1;
+            overflow: hidden;
             cursor: pointer;
-            overflow: hidden; /* Ensure badges don't overflow */
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--royal-gold);
+        }
+
+        .product::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                transparent,
+                transparent,
+                transparent,
+                rgba(212, 175, 55, 0.1)
+            );
+            transform: rotate(30deg);
+            transition: var(--transition);
+        }
+
+        .product:hover {
+            transform: translateY(-5px) scale(1.03);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--royal-light);
+            background: linear-gradient(145deg, rgba(75, 0, 130, 0.7), rgba(26, 16, 61, 0.9));
+            color: var(--royal-light);
+        }
+
+        .product:hover::before {
+            animation: shine 1.5s;
+        }
+
+        @keyframes shine {
+            100% {
+                left: 150%;
+                top: 150%;
+            }
         }
 
         .product img {
             width: 100%;
-            border-radius: 5px;
-            margin: 0 auto;
+            max-width: 180px;
+            height: auto;
+            border-radius: var(--border-radius);
+            margin: 0 auto 15px;
             display: block;
-            transition: transform 0.3s;
+            transition: var(--transition);
+            object-fit: contain;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .product:hover img {
+            transform: scale(1.05);
+            border-color: var(--royal-light);
         }
 
         .product h3 {
-            font-size: 18px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
             margin-top: 10px;
-            color: #ffffff;
+            color: var(--royal-gold);
+            font-weight: 600;
+            letter-spacing: 1px;
         }
 
-        .product:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        .product:hover h3 {
+            color: var(--royal-light);
         }
 
+        /* Royal Badges */
         .featured-badge {
             position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: #b30000;
+            top: 15px;
+            left: 15px;
+            background: linear-gradient(135deg, var(--royal-red), #8B0000);
             color: white;
             font-size: 12px;
-            padding: 3px 7px;
-            border-radius: 3px;
-            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: var(--shadow-sm);
+            z-index: 2;
+            font-family: 'Cinzel', serif;
         }
 
         .discount-badge {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: #ffcc00; /* Yellow background */
-            color: black;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, var(--royal-gold), #B8860B);
+            color: #000;
             font-size: 12px;
-            padding: 3px 7px;
-            border-radius: 3px;
-            font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            box-shadow: var(--shadow-sm);
+            z-index: 2;
+            font-family: 'Cinzel', serif;
         }
 
-        /* WhatsApp floating icon bottom left */
+        /* Royal WhatsApp Button */
         .whatsapp-float {
             position: fixed;
-            bottom: 20px;
-            left: 20px;
-            z-index: 100;
-            cursor: pointer;
+            bottom: 25px;
+            left: 25px;
             width: 70px;
             height: 70px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: var(--shadow-lg);
+            transition: var(--transition);
+            z-index: 100;
+            cursor: pointer;
+            border: 2px solid var(--royal-gold);
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
         }
 
         .whatsapp-float img {
-            width: 100%;
-            height: 100%;
-            display: block;
+            width: 60%;
+            height: 60%;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
+        }
+
+        /* Royal Ornamental Elements */
+        .royal-ornament {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.05;
+            font-size: 120px;
+            color: var(--royal-gold);
+        }
+
+        .ornament-1 {
+            top: 10%;
+            left: 5%;
+            transform: rotate(15deg);
+        }
+
+        .ornament-2 {
+            bottom: 10%;
+            right: 5%;
+            transform: rotate(-15deg);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .product-list {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            .product h3 {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-list {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .whatsapp-float {
+                width: 60px;
+                height: 60px;
+                bottom: 15px;
+                left: 15px;
+            }
         }
     </style>
 </head>
 <body>
 
+    <!-- Royal Ornamental Elements -->
+    <div class="royal-ornament ornament-1">❖</div>
+    <div class="royal-ornament ornament-2">❖</div>
+
     <header>
-        <img src="logo.png" alt="Logo" class="logo" />
-        <div class="menu-bar" onclick="toggleMenu()">
-            <div></div>
-            <div></div>
-            <div></div>
+        <img src="logo.png" alt="Royal Gaming Logo" class="logo" />
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
         <div class="dropdown-menu" id="dropdownMenu">
             <a href="index.html">Home</a>
@@ -170,87 +379,85 @@
 
     <div class="product-list" id="product-list">
         <div class="product topup" onclick="location.href='ff-topup-list.html'">
-            <span class="featured-badge">SERVICE</span>
-            <span class="discount-badge"></span>
-            <img src="image.png" alt="free fire" />
-            <h3>TOPUP BD</h3>
+            <span class="featured-badge">Service</span>
+            <img src="image.png" alt="Free Fire" />
+            <h3>Free Fire Topup</h3>
         </div>
         <div class="product topup" onclick="location.href='1x-depo-list.html'">
-            <span class="featured-badge">SERVICE</span>
-            <img src="1xbet_com.png" alt="1x bet" />
-            <h3>1X DEPO</h3>
+            <span class="featured-badge">Service</span>
+            <img src="1xbet_com.png" alt="1xBet" />
+            <h3>1xBet Deposit</h3>
         </div>
         <div class="product topup" onclick="location.href='pubg-topup-list.html'">
-            <span class="featured-badge">SERVICE</span>
-            <img src="pubg.png" alt="pubg" />
+            <span class="featured-badge">Service</span>
+            <img src="pubg.png" alt="PUBG" />
             <h3>PUBG UC</h3>
         </div>
-
         <div class="product topup" onclick="location.href='telegram-topup-list.html'">
-            <span class="featured-badge">SERVICE</span>
-            <img src="telegram.jpg" alt="telegram premium" />
-            <h3>TELEGRAM PREMIUM</h3>
+            <span class="featured-badge">Service</span>
+            <img src="telegram.jpg" alt="Telegram" />
+            <h3>Telegram Premium</h3>
         </div>
         <div class="product topup" onclick="location.href='netflex-list.html'">
-            <span class="featured-badge">SERVICE</span>
-            <img src="Netflix.png" alt="netflix premium" />
-            <h3>NETFLIX PREMIUM</h3>
+            <span class="featured-badge">Service</span>
+            <img src="Netflix.png" alt="Netflix" />
+            <h3>Netflix Premium</h3>
         </div>
         <div class="product topup" onclick="location.href='roblox-topup-list.html'">
-            <span class="featured-badge">SERVICE</span>
-            <img src="rb.jpeg" alt="robux" />
-            <h3>ROBUX</h3>
+            <span class="featured-badge">Service</span>
+            <img src="rb.jpeg" alt="Roblox" />
+            <h3>Robux</h3>
         </div>
         <div class="product topup" onclick="location.href='farlighr-topup-list.html'">
-            <span class="featured-badge">SERVICE</span>
-            <img src="farlight.jpeg" alt="farlight diamond" />
-            <h3>FARLIGHT DIAMOND</h3>
+            <span class="featured-badge">Service</span>
+            <img src="farlight.jpeg" alt="Farlight" />
+            <h3>Farlight Diamonds</h3>
         </div>
         <div class="product topup" onclick="location.href='coc-topup-list.html'">
-            <span class="featured-badge">SERVICE</span>
-            <img src="coc.jpeg" alt="coc gems" />
-            <h3>COC GEMS</h3>
+            <span class="featured-badge">Service</span>
+            <img src="coc.jpeg" alt="Clash of Clans" />
+            <h3>COC Gems</h3>
         </div>
         <div class="product topup" onclick="location.href='free-fire-evo-access.html'">
-            <span class="featured-badge">SERVICE</span>
-            <img src="free-fire-evo-access.webp" alt="new product 1" />
-            <h3>EVO ACCESS</h3>
+            <span class="featured-badge">Service</span>
+            <img src="free-fire-evo-access.webp" alt="Free Fire Evo" />
+            <h3>EVO Access</h3>
         </div>
         <div class="product topup" onclick="location.href='free-fire-airdrop.html'">
-            <span class="featured-badge">SERVICE</span>
-            <img src="free-fire-airdrop.jpeg" alt="new product 2" />
-            <h3>AIRDROP</h3>
+            <span class="featured-badge">Service</span>
+            <img src="free-fire-airdrop.jpeg" alt="Free Fire Airdrop" />
+            <h3>Airdrop</h3>
         </div>
-    </div>
-
-    <div class="product-list" id="product-list">
         <div class="product topup" onclick="location.href='next.html'">
-            <span class="featured-badge">SERVICE</span>
-            <img src="download.png" alt="free fire" />
-            <h3>TIKTOK</h3>
+            <span class="featured-badge">Service</span>
+            <img src="download.png" alt="TikTok" />
+            <h3>TikTok Services</h3>
         </div>
     </div>
 
-    <!-- WhatsApp floating button -->
+    <!-- Royal WhatsApp Button -->
     <a href="https://wa.me/9779806167776" target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
-        <img src="wp-logo.png" alt="WhatsApp Logo" />
+        <img src="wp-logo.png" alt="WhatsApp" />
     </a>
 
     <script>
         function toggleMenu() {
             const dropdownMenu = document.getElementById("dropdownMenu");
-            dropdownMenu.style.display =
-                dropdownMenu.style.display === "block" ? "none" : "block";
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            dropdownMenu.classList.toggle("active");
+            menuToggle.classList.toggle("active");
         }
 
-        window.onclick = function (event) {
+        document.addEventListener('click', function(event) {
             const dropdownMenu = document.getElementById("dropdownMenu");
-            if (!event.target.closest(".menu-bar")) {
-                dropdownMenu.style.display = "none";
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            if (!event.target.closest('.menu-toggle') && !event.target.closest('.dropdown-menu')) {
+                dropdownMenu.classList.remove("active");
+                menuToggle.classList.remove("active");
             }
-        };
+        });
     </script>
 </body>
 </html>
-
-
