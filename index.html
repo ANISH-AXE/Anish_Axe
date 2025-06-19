@@ -93,7 +93,7 @@
             border-radius: 3px;
             transition: transform 0.2s ease, opacity 0.2s ease;
             transform-origin: center;
-            will-change: transform, opacity; /* Optimize for GPU */
+            will-change: transform, opacity;
         }
 
         .menu-toggle span:nth-child(1) {
@@ -134,7 +134,7 @@
             box-shadow: var(--shadow-lg);
             border-left: 1px solid var(--royal-gold);
             overflow-y: auto;
-            will-change: transform; /* Optimize for GPU */
+            will-change: transform;
         }
 
         .dropdown-menu.active {
@@ -169,7 +169,7 @@
             color: var(--royal-light);
         }
 
-        /* Rest of your styles remain unchanged */
+        /* Product Grid */
         .product-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -455,7 +455,6 @@
             const dropdownMenu = document.getElementById('dropdownMenu');
             let isAnimating = false;
             
-            // Optimized toggle function
             function toggleMenu() {
                 if (isAnimating) return;
                 
@@ -463,22 +462,18 @@
                 menuToggle.classList.toggle('active');
                 dropdownMenu.classList.toggle('active');
                 
-                // Prevent body scroll when menu is open
                 document.body.style.overflow = dropdownMenu.classList.contains('active') ? 'hidden' : '';
                 
-                // Reset animation lock after transition ends
                 dropdownMenu.addEventListener('transitionend', function() {
                     isAnimating = false;
                 }, { once: true });
             }
             
-            // Toggle menu on click with event delegation
             menuToggle.addEventListener('click', function(e) {
                 e.stopPropagation();
                 toggleMenu();
             });
             
-            // Close menu when clicking outside (optimized)
             document.addEventListener('click', function(e) {
                 if (dropdownMenu.classList.contains('active') && 
                     !dropdownMenu.contains(e.target) && 
@@ -487,7 +482,6 @@
                 }
             });
             
-            // Close menu when clicking on a link (optimized)
             dropdownMenu.addEventListener('click', function(e) {
                 if (e.target.tagName === 'A' || e.target.parentElement.tagName === 'A') {
                     toggleMenu();
