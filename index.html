@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Marcellus&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
             --royal-gold: #D4AF37;
@@ -38,6 +39,7 @@
             color: var(--text-light);
             min-height: 100vh;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         /* Royal Header */
@@ -71,7 +73,7 @@
             box-shadow: var(--glow-effect);
         }
 
-        /* Royal Menu Toggle */
+        /* Optimized Hamburger Menu */
         .menu-toggle {
             display: flex;
             flex-direction: column;
@@ -80,7 +82,7 @@
             height: 24px;
             cursor: pointer;
             z-index: 110;
-            transition: var(--transition);
+            position: relative;
         }
 
         .menu-toggle span {
@@ -89,16 +91,25 @@
             height: 3px;
             background-color: var(--royal-gold);
             border-radius: 3px;
-            transition: var(--transition);
+            transition: transform 0.2s ease, opacity 0.2s ease;
             transform-origin: center;
+            will-change: transform, opacity; /* Optimize for GPU */
         }
 
-        .menu-toggle:hover span {
-            background-color: var(--royal-light);
+        .menu-toggle span:nth-child(1) {
+            transform: translateY(0) rotate(0);
+        }
+
+        .menu-toggle span:nth-child(2) {
+            transition: opacity 0.2s ease;
+        }
+
+        .menu-toggle span:nth-child(3) {
+            transform: translateY(0) rotate(0);
         }
 
         .menu-toggle.active span:nth-child(1) {
-            transform: translateY(8px) rotate(45deg);
+            transform: translateY(10px) rotate(45deg);
         }
 
         .menu-toggle.active span:nth-child(2) {
@@ -106,52 +117,59 @@
         }
 
         .menu-toggle.active span:nth-child(3) {
-            transform: translateY(-8px) rotate(-45deg);
+            transform: translateY(-10px) rotate(-45deg);
         }
 
-        /* Royal Dropdown Menu */
+        /* Optimized Dropdown Menu */
         .dropdown-menu {
             position: fixed;
             top: 0;
-            right: -100%;
+            right: -280px;
             width: 280px;
             height: 100vh;
-            background: rgba(75, 0, 130, 0.95);
-            padding: 80px 30px 30px;
-            transition: var(--transition);
+            background: rgba(75, 0, 130, 0.98);
+            padding: 100px 30px 30px;
+            transition: transform 0.3s ease-out;
             z-index: 105;
             box-shadow: var(--shadow-lg);
-            backdrop-filter: blur(10px);
             border-left: 1px solid var(--royal-gold);
+            overflow-y: auto;
+            will-change: transform; /* Optimize for GPU */
         }
 
         .dropdown-menu.active {
-            right: 0;
+            transform: translateX(-280px);
         }
 
         .dropdown-menu a {
-            display: block;
+            display: flex;
+            align-items: center;
             color: var(--royal-gold);
             text-decoration: none;
             padding: 12px 15px;
-            margin: 10px 0;
+            margin: 15px 0;
             border-radius: var(--border-radius);
             font-weight: 600;
-            transition: var(--transition);
+            transition: background-color 0.2s ease;
             background: rgba(212, 175, 55, 0.05);
             border-left: 3px solid transparent;
             font-family: 'Cinzel', serif;
             letter-spacing: 1px;
         }
 
+        .dropdown-menu a i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+        }
+
         .dropdown-menu a:hover {
             background: rgba(212, 175, 55, 0.15);
-            transform: translateX(-5px);
             border-left: 3px solid var(--royal-gold);
             color: var(--royal-light);
         }
 
-        /* Royal Product Grid */
+        /* Rest of your styles remain unchanged */
         .product-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -243,7 +261,6 @@
             color: var(--royal-light);
         }
 
-        /* Royal Badges */
         .featured-badge {
             position: absolute;
             top: 15px;
@@ -261,22 +278,6 @@
             font-family: 'Cinzel', serif;
         }
 
-        .discount-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: linear-gradient(135deg, var(--royal-gold), #B8860B);
-            color: #000;
-            font-size: 12px;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-weight: 600;
-            box-shadow: var(--shadow-sm);
-            z-index: 2;
-            font-family: 'Cinzel', serif;
-        }
-
-        /* Royal WhatsApp Button */
         .whatsapp-float {
             position: fixed;
             bottom: 25px;
@@ -307,7 +308,6 @@
             filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
         }
 
-        /* Royal Ornamental Elements */
         .royal-ornament {
             position: fixed;
             pointer-events: none;
@@ -329,7 +329,6 @@
             transform: rotate(-15deg);
         }
 
-        /* Responsive Design */
         @media (max-width: 768px) {
             .product-list {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -354,6 +353,15 @@
                 bottom: 15px;
                 left: 15px;
             }
+            
+            .dropdown-menu {
+                width: 85%;
+                right: -85%;
+            }
+            
+            .dropdown-menu.active {
+                transform: translateX(-85%);
+            }
         }
     </style>
 </head>
@@ -365,16 +373,16 @@
 
     <header>
         <img src="logo.png" alt="Royal Gaming Logo" class="logo" />
-        <div class="menu-toggle" onclick="toggleMenu()">
+        <div class="menu-toggle" id="menuToggle">
             <span></span>
             <span></span>
             <span></span>
         </div>
         <div class="dropdown-menu" id="dropdownMenu">
-            <a href="login.html">login</a>
-            <a href="index.html">Home</a>
-            <a href="about.html">About Us</a>
-            <a href="contact-info.html">Contact</a>
+            <a href="login.html"><i class="fas fa-sign-in-alt"></i> Login</a>
+            <a href="index.html"><i class="fas fa-home"></i> Home</a>
+            <a href="about.html"><i class="fas fa-scroll"></i> About Us</a>
+            <a href="contact-info.html"><i class="fas fa-envelope"></i> Contact</a>
         </div>
     </header>
 
@@ -442,22 +450,49 @@
     </a>
 
     <script>
-        function toggleMenu() {
-            const dropdownMenu = document.getElementById("dropdownMenu");
-            const menuToggle = document.querySelector('.menu-toggle');
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.getElementById('menuToggle');
+            const dropdownMenu = document.getElementById('dropdownMenu');
+            let isAnimating = false;
             
-            dropdownMenu.classList.toggle("active");
-            menuToggle.classList.toggle("active");
-        }
-
-        document.addEventListener('click', function(event) {
-            const dropdownMenu = document.getElementById("dropdownMenu");
-            const menuToggle = document.querySelector('.menu-toggle');
-            
-            if (!event.target.closest('.menu-toggle') && !event.target.closest('.dropdown-menu')) {
-                dropdownMenu.classList.remove("active");
-                menuToggle.classList.remove("active");
+            // Optimized toggle function
+            function toggleMenu() {
+                if (isAnimating) return;
+                
+                isAnimating = true;
+                menuToggle.classList.toggle('active');
+                dropdownMenu.classList.toggle('active');
+                
+                // Prevent body scroll when menu is open
+                document.body.style.overflow = dropdownMenu.classList.contains('active') ? 'hidden' : '';
+                
+                // Reset animation lock after transition ends
+                dropdownMenu.addEventListener('transitionend', function() {
+                    isAnimating = false;
+                }, { once: true });
             }
+            
+            // Toggle menu on click with event delegation
+            menuToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                toggleMenu();
+            });
+            
+            // Close menu when clicking outside (optimized)
+            document.addEventListener('click', function(e) {
+                if (dropdownMenu.classList.contains('active') && 
+                    !dropdownMenu.contains(e.target) && 
+                    !menuToggle.contains(e.target)) {
+                    toggleMenu();
+                }
+            });
+            
+            // Close menu when clicking on a link (optimized)
+            dropdownMenu.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A' || e.target.parentElement.tagName === 'A') {
+                    toggleMenu();
+                }
+            });
         });
     </script>
 </body>
